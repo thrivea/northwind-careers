@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Northwind Studio — Careers</title>
+    <meta name="description" content="Open roles at Northwind Studio — powered by Thrivea ATS." />
+    <style>
+      /* ---- Northwind's own (fictional) site styles. Deliberately opinionated (global resets, its own
+             serif font, loud colors) to prove the Thrivea widget is fully isolated by its Shadow DOM —
+             it neither leaks out nor gets broken by the host page. ---- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Georgia, 'Times New Roman', serif;
+        color: #2b2b2b;
+        background: #fbf7f0;
+      }
+      h3 {
+        color: hotpink !important;
+      } /* if this leaks into the widget, isolation failed */
+      a {
+        color: #b8460e;
+      }
+      .nw-header {
+        background: #1a3c34;
+        color: #fff;
+        padding: 1.25rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nw-logo {
+        font-size: 1.4rem;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+      }
+      .nw-nav a {
+        color: #cfe3dd;
+        margin-left: 1.5rem;
+        text-decoration: none;
+      }
+      .nw-hero {
+        background: linear-gradient(135deg, #1a3c34, #2f6b5c);
+        color: #fff;
+        padding: 4rem 2rem;
+        text-align: center;
+      }
+      .nw-hero h1 {
+        font-size: 2.6rem;
+        margin-bottom: 0.75rem;
+      }
+      .nw-hero p {
+        font-size: 1.15rem;
+        opacity: 0.9;
+        max-width: 640px;
+        margin: 0 auto;
+      }
+      .nw-section {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem;
+      }
+      .nw-section > h2 {
+        font-size: 2rem;
+        color: #1a3c34;
+        margin-bottom: 0.5rem;
+      }
+      .nw-section > p.lead {
+        color: #5b5b5b;
+        margin-bottom: 2rem;
+      }
+      .nw-embed-note {
+        background: #fff;
+        border: 1px dashed #c9c2b4;
+        border-radius: 8px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 2rem;
+        font-family: ui-monospace, monospace;
+        font-size: 0.82rem;
+        color: #555;
+        overflow-x: auto;
+      }
+      .nw-footer {
+        background: #1a3c34;
+        color: #cfe3dd;
+        text-align: center;
+        padding: 2rem;
+        margin-top: 3rem;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="nw-header">
+      <div class="nw-logo">▲ Northwind Studio</div>
+      <nav class="nw-nav">
+        <a href="#">Work</a>
+        <a href="#">About</a>
+        <a href="#careers">Careers</a>
+      </nav>
+    </header>
+
+    <section class="nw-hero">
+      <h1>Build things that matter</h1>
+      <p>We're a small product studio crafting software people love. Come build with us.</p>
+    </section>
+
+    <main class="nw-section" id="careers">
+      <h2>Careers</h2>
+      <p class="lead">Open roles, powered by our ATS. A developer added this with two lines of HTML:</p>
+
+      <pre class="nw-embed-note">
+&lt;div id="thrivea-careers" data-tenant="stevos"&gt;&lt;/div&gt;
+&lt;script src="https://embed.thrivea.com/careers.js" async&gt;&lt;/script&gt;</pre>
+
+      <!-- ===== The only thing Northwind adds to their site. ===== -->
+      <!-- This demo points the widget at the Thrivea DEV careers surface and serves the bundle locally
+           (./careers.js). In production a client would use embed.thrivea.com and only data-tenant.
+           The reCAPTCHA *site* key is public (it lives in client HTML by design); the dev API URL is
+           not sensitive. data-accent is intentionally omitted so the widget uses the Thrivea brand purple. -->
+      <div
+        id="thrivea-careers"
+        data-tenant="stevos"
+        data-api="https://app-thrivea-dev.azurewebsites.net/careers/v1"
+        data-recaptcha-key="6LePAIIsAAAAAHXe-a8oW_o2m2rRuFPb2o4BrX2o"
+        data-locale="en"
+      ></div>
+      <script src="./careers.js" async></script>
+    </main>
+
+    <footer class="nw-footer">© 2026 Northwind Studio. All rights reserved. Careers powered by Thrivea.</footer>
+  </body>
+</html>
