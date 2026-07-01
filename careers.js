@@ -85,7 +85,7 @@
 }
 .thr-hint { color: var(--thr-muted); font-size: .75rem; font-weight: 400; }
 .thr-consent { display: flex; align-items: flex-start; gap: .5rem; font-size: .85rem; color: var(--thr-text); cursor: pointer; }
-.thr-consent input { margin-top: .15rem; }
+.thr-consent input { margin-top: .15rem; accent-color: var(--thr-accent); }
 /* Honeypot: visually + AT-hidden, but still submitted by bots. */
 .thr-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .thr-form-error { color: #e03131; font-size: .85rem; margin: 0; }
