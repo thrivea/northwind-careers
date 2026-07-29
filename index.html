@@ -115,21 +115,24 @@
 
       <pre class="nw-embed-note">
 &lt;div id="thrivea-careers" data-tenant="stevos"&gt;&lt;/div&gt;
-&lt;script src="https://embed.thrivea.com/careers.js" async&gt;&lt;/script&gt;</pre>
+&lt;script src="https://app-dev.thrivea.com/careers.js" async&gt;&lt;/script&gt;</pre>
 
       <!-- ===== The only thing Northwind adds to their site. ===== -->
-      <!-- This demo points the widget at the Thrivea DEV careers surface and serves the bundle locally
-           (./careers.js). In production a client would use embed.thrivea.com and only data-tenant.
-           The reCAPTCHA *site* key is public (it lives in client HTML by design); the dev API URL is
-           not sensitive. data-accent is intentionally omitted so the widget uses the Thrivea brand purple. -->
+      <!-- Loaded from the Thrivea DEV environment, which is what makes this a real demo: the bundle is
+           whatever that environment currently serves, so a widget fix reaches this page without anyone
+           touching this repo. It used to be a copy committed here, which quietly froze the demo on a
+           months-old build.
+           No data-api: the bundle each environment serves already knows its own careers API, so the
+           snippet carries no infrastructure hostname — exactly what Settings → Careers hands a customer.
+           The reCAPTCHA *site* key is public by design (it lives in client HTML).
+           data-accent is intentionally omitted so the widget uses the Thrivea brand purple. -->
       <div
         id="thrivea-careers"
         data-tenant="stevos"
-        data-api="https://app-thrivea-dev.azurewebsites.net/careers/v1"
         data-recaptcha-key="6LePAIIsAAAAAHXe-a8oW_o2m2rRuFPb2o4BrX2o"
         data-locale="en"
       ></div>
-      <script src="./careers.js" async></script>
+      <script src="https://app-dev.thrivea.com/careers.js" async></script>
     </main>
 
     <footer class="nw-footer">© 2026 Northwind Studio. All rights reserved. Careers powered by Thrivea.</footer>
