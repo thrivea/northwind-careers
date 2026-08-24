@@ -25,22 +25,50 @@ the Thrivea environment serves at `{origin}/careers.js`, so it is always current
 
 ## Config (on the `<div data-*>`)
 
-| Attribute            | Value (this demo)                                            |
-| -------------------- | ------------------------------------------------------------ |
-| `data-tenant`        | `stevos` (the dev tenant's careers slug)                     |
-| `data-recaptcha-key` | public reCAPTCHA v3 site key (must allow `thrivea.github.io`) |
-| `data-locale`        | `en`                                                         |
+| Attribute     | Value (this demo)                        |
+| ------------- | ---------------------------------------- |
+| `data-tenant` | `stevos` (the dev tenant's careers slug) |
+
+That is the whole configuration — the same one line Settings → Careers generates, nothing added.
+
+This page used to also pin `data-recaptcha-key` and `data-locale`. Both were removed: each was already
+the dev environment's own default, so the only thing they added was a second copy to keep in sync. The
+reCAPTCHA **site** key is public (it ships in client HTML), but it is baked into the bundle per
+environment precisely so it can be rotated — pinned in a customer's HTML it would outlive the next
+rotation and silently take the apply form down. `data-locale` is gone so the widget does what an
+unconfigured embed really does: follow the visitor's browser language.
 
 No `data-api`: the bundle an environment serves already knows its own careers API base (baked in at build
 time), so the snippet stays free of infrastructure hostnames. It remains supported as an override if a
 page ever needs to point at a different environment.
 
-> The reCAPTCHA **site** key is public by design (it ships in client HTML). The apply form only submits
-> when the key's allowed-domains include `thrivea.github.io`.
-
 Other optional attributes — `data-accent`, `data-theme`, `data-layout` — are documented in-product under
 Settings → Careers. `data-accent` is intentionally omitted here so the widget shows the Thrivea brand
 purple rather than blending into Northwind's palette.
+
+## Content-Security-Policy
+
+The page runs under a deliberately strict CSP (`default-src 'none'`), delivered as a `<meta>` tag because
+GitHub Pages cannot send headers. A real site would send it as a header; the effect is the same. The point
+is to prove the embed under the conditions a security-reviewed customer will actually impose.
+
+```
+script-src  'self' https://app-dev.thrivea.com https://www.google.com https://www.gstatic.com
+connect-src 'self' https://app-thrivea-dev.azurewebsites.net https://www.google.com
+style-src   'self' 'unsafe-inline'
+img-src     'self' data: https://www.gstatic.com
+frame-src   https://www.google.com
+```
+
+Settings → Careers currently names only the first two sources (`app-dev.thrivea.com` for the script,
+`app-thrivea-dev.azurewebsites.net` for the roles). Verified in Chromium: those two **are** enough to list
+roles, open a role and open the apply form — but not to submit one. The form mints an invisible reCAPTCHA
+v3 token, so Google's script is blocked, the widget submits tokenless, and the backend rejects it
+(`RecaptchaVerifier` returns false on an empty token whenever the environment has a full key pair). The
+candidate fills the form and is turned away with no way to tell why.
+
+`style-src 'unsafe-inline'` is needed because the widget injects its stylesheet into its Shadow DOM as a
+`<style>` element; without it the widget renders, unstyled.
 
 ## Live updates
 
