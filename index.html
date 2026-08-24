@@ -17,8 +17,8 @@
          invisible reCAPTCHA v3 token from Google, so www.google.com / www.gstatic.com must be allowed
          too (script-src + frame-src, and connect-src for the challenge). Without them the script is
          blocked, the widget submits tokenless and the backend rejects the application — the candidate
-         fills the form and is turned away. style-src needs 'unsafe-inline' because the widget injects
-         its stylesheet into its Shadow DOM as a <style> element.
+         fills the form and is turned away. style-src 'unsafe-inline' is here for Northwind's OWN inline
+         <style> block; the widget stopped needing it once it moved to a constructed stylesheet.
          Verified in Chromium against this exact string: zero securitypolicyviolation events, roles list,
          detail view, apply form and reCAPTCHA all working. -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://app-dev.thrivea.com https://www.google.com https://www.gstatic.com; connect-src 'self' https://app-thrivea-dev.azurewebsites.net https://www.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.gstatic.com; font-src 'self'; frame-src https://www.google.com; form-action 'self'; base-uri 'none'; object-src 'none'" />

@@ -67,8 +67,11 @@ v3 token, so Google's script is blocked, the widget submits tokenless, and the b
 (`RecaptchaVerifier` returns false on an empty token whenever the environment has a full key pair). The
 candidate fills the form and is turned away with no way to tell why.
 
-`style-src 'unsafe-inline'` is needed because the widget injects its stylesheet into its Shadow DOM as a
-`<style>` element; without it the widget renders, unstyled.
+`style-src 'unsafe-inline'` covers Northwind's own inline `<style>` block. The widget used to need it
+too — it injected its stylesheet into its Shadow DOM as a `<style>` element, which CSP polices even in a
+shadow root — until it moved to a constructed stylesheet (CSSOM, which CSP does not police). Once that
+build reaches dev, the widget stops contributing to this line entirely: a customer with a strict
+`style-src` gets the widget fully styled without weakening their policy.
 
 ## Live updates
 
